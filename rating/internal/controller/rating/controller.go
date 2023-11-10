@@ -34,3 +34,7 @@ func (c *Controller) GetAggregateRating(ctx context.Context,
 	}
 	return sum / float64(len(ratings)), nil
 }
+
+func (c *Controller) PutRating(ctx context.Context, recordID model.RecordID, recordType model.RecordType, rating *model.Rating) error {
+	return c.repo.Put(ctx, recordID, recordType, rating)
+}
