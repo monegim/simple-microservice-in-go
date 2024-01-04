@@ -2,6 +2,7 @@ package http
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	gateway "github.com/monegim/simple-microservice-in-go/movie/internal/ gateway"
 	"github.com/monegim/simple-microservice-in-go/rating/pkg/model"
@@ -38,4 +39,8 @@ func (g *Gateway) GetAggregatedRating(ctx context.Context,
 		return 0, fmt.Errorf("non-2xx response: %v", resp)
 	}
 	var v float64
+	if err := json.NewDecoder(resp.Body).Decode(&v); err != nil {
+		return 0, err
+	}
+	return v, nil
 }
